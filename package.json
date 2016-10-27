@@ -1,0 +1,25 @@
+{
+  "name": "styleguide",
+  "version": "0.1.0",
+  "description": "Restaurant Zone Style Guide",
+  "main": "index.html",
+  "devDependencies": {
+    "bower": "^1.3.12",
+    "gulp": "^3.8.8",
+    "gulp-csslint": "^0.1.5",
+    "gulp-util": "^3.0.1"
+  },
+  "scripts": {
+    "test": "gulp"
+  },
+  "keywords": [
+    "rzone",
+    "restaurant zone",
+    "frontend",
+    "style",
+    "guide"
+  ],
+  "author": "Jose Lechuga <joslec9@gmail.com>",
+  "license": "MIT",
+  "private": true
+}

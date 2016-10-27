@@ -1,0 +1,29 @@
+{
+  "name": "rzone styleguide",
+  "version": "0.1.0",
+  "authors": [
+    "Jose Lechuga <joslec9@gmail.com>"
+  ],
+  "description": "Restaurant Zone Style Guide",
+  "main": "index.html",
+  "keywords": [
+    "rzone",
+    "frontend",
+    "Restaurant Zone",
+    "style",
+    "guide"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "normalize.css": "~3.0.2",
+    "font-awesome": "~4.4.0"
+  }
+}

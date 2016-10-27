@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Restaurant Zone Style Guide</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="bower_components/normalize.css/normalize.css">
+        <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300|Roboto+Condensed:400,700|Inconsolata">
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body>
+        <nav>
+            <ul>
+                <li><a href="index.html">About</a></li>
+                <li><a href="html.html">HTML</a></li>
+                <li><a href="css.html">CSS</a></li>
+                <li><a href="Sass.html" class="active">Sass</a></li>
+                <li><a href="javascript.html">JavaScript</a></li>
+                <li><a href="git.html">Git</a></li>
+                <li><a href="bootstrap.html">Bootstrap</a></li>
+            </ul>
+        </nav>
+        <h1>Sass Style Guide</h1>
+        <section>
+            <h2>Introduction</h2>
+            <p>Sass (Syntactically Awesome StyleSheets) Sass is an extension of CSS that adds power and elegance to the basic language. It allows you to use variables, nested rules, mixins, inline imports, and more, all with a fully CSS-compatible syntax. Sass helps keep large stylesheets well-organized, and get small stylesheets up and running quickly, particularly with the help of the Compass style library.</p>
+            <h3>Syntax</h3>
+            <hr >
+            <p>There are two syntaxes available for Sass. The first, known as SCSS (Sassy CSS) and used throughout this reference, is an extension of the syntax of CSS. This means that every valid CSS stylesheet is a valid SCSS file with the same meaning. In addition, SCSS understands most CSS hacks and vendor-specific syntax, such as <b>IE’s old filter syntax</b>. This syntax is enhanced with the Sass features described below. Files using this syntax have the .scss extension.</p>
+            <p>The second and older syntax, known as the indented syntax (or sometimes just “Sass”), provides a more concise way of writing CSS. It uses indentation rather than brackets to indicate nesting of selectors, and newlines rather than semicolons to separate properties. Some people find this to be easier to read and quicker to write than SCSS. The indented syntax has all the same features, although some of them have slightly different syntax; this is described in the indented syntax reference. Files using this syntax have the .sass extension.</p>
+            <p>Either syntax can import files written in the other. Files can be automatically converted from one syntax to the other using the sass-convert command line tool.</p>
+        </section>
+        <section>
+            <h2>General Formatting Rules</h2>
+            <article>
+                <h3>
+                    <a href="#Nested" id="Nested"><i class="fa fa-link"></i></a>
+                    Nested Rules
+                </h3>
+                <p>Sass allows CSS rules to be nested within one another. we are able to our properties instead of defining them seperatly. The inner rule then only applies within the outer rule’s selector. With that in mind, here's an example of some typical styles for a site's navigation:</p>
+                <h4 class="not-recommended">
+                    Not Recommended:
+                </h4>
+                <pre><code class="not-recommended">
+.content {
+border: 1px solid #ccc;
+padding: 20px;
+}
+.content h2 {
+font-size: 3em;
+margin: 20px 0;
+}
+.content p {
+font-size: 1.5em;
+margin: 15px 0;
+}
+</code></pre>
+                <h4 class="recommended">
+                    Recommended:
+                </h4>
+                <pre><code class="recommended">
+.content {
+border: 1px solid #ccc;
+padding: 20px;
+    h2 {
+    font-size: 3em;
+    margin: 20px 0;
+    }
+    p {
+    font-size: 1.5em;
+    margin: 15px 0;
+    }
+}
+</code></pre>
+                <p>Below you'll notice that the ul, li, and a selectors are nested inside the nav selector. This is a great way to organize your CSS and make it more readable. </p>
+                <pre><code>
+nav
+  ul
+    margin: 0
+    padding: 0
+    list-style: none
+
+  li
+    display: inline-block
+
+  a
+    display: block
+    padding: 6px 12px
+    text-decoration: none
+</code></pre>
+                <p>When you generate the CSS you'll get something like this:</p>
+                <pre><code>
+nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+nav li {
+  display: inline-block;
+}
+
+nav a {
+  display: block;
+  padding: 6px 12px;
+  text-decoration: none;
+}
+</code></pre>
+            </article>
+            <article>
+                <h3>
+                    <a href="#variables" id="variables"><i class="fa fa-link"></i></a>
+                    Variables
+                </h3>
+                <p>Think of variables as a way to store information that you want to reuse throughout your stylesheet. You can store things like colors, font stacks, or any CSS value you think you'll want to reuse. Sass uses the $ symbol to make something a variable. Here's an example:</p>
+                <pre><code>$font-stack:    Helvetica, sans-serif
+$primary-color: #333
+
+body
+  font: 100% $font-stack
+  color: $primary-color </code></pre>
+                <p>When the Sass is processed, it takes the variables we define for the $font-stack and <code>$primary-color</code>and outputs normal CSS with our variable values placed in the CSS. This can be extremely powerful when working with brand colors and keeping them consistent throughout the site. </p>
+                <pre><code>body {
+  font: 100% Helvetica, sans-serif;
+  color: #333;
+} </code></pre>
+                <p> Example from our app_settings.scss</p>
+                <pre><code>//rzone variables
+$rzone-blue: #10ACCF;
+$rzone-white: #fff;
+$rzone-red: #dd2a66;
+ </code></pre>
+            </article>
+            <article>
+                <h3>
+                    <a href="#Extend" id="Extend"><i class="fa fa-link"></i></a>
+                    Extend/Inheritance
+                </h3>
+                <p>This is one of the most useful features of Sass. Using @extend lets you share a set of CSS properties from one selector to another. It helps keep your Sass very DRY. In our example we're going to create a simple series of messaging for errors, warnings and successes.</p>
+                <pre><code> .message
+  border: 1px solid #ccc
+  padding: 10px
+  color: #333
+
+
+.success
+  @extend .message
+  border-color: green
+
+
+.error
+  @extend .message
+  border-color: red
+
+
+.warning
+  @extend .message
+  border-color: yellow</code></pre>
+                <p>What the above code does is allow you to take the CSS properties in .message and apply them to <code>.success, .error, & .warning.</code> The magic happens with the generated CSS, and this helps you avoid having to write multiple class names on HTML elements. This is what it looks like: </p>
+                <pre><code>.message, .success, .error, .warning {
+  border: 1px solid #cccccc;
+  padding: 10px;
+  color: #333;
+}
+
+.success {
+  border-color: green;
+}
+
+.error {
+  border-color: red;
+}
+
+.warning {
+  border-color: yellow;
+}
+} </code></pre>
+            </article>
+            <article>
+                <h3>
+                    <a href="#Mixins" id="Mixins"><i class="fa fa-link"></i></a>
+                    Mixins
+                </h3>
+                <p>Some things in CSS are a bit tedious to write, especially with CSS3 and the many vendor prefixes that exist. A mixin lets you make groups of CSS declarations that you want to reuse throughout your site. You can even pass in values to make your mixin more flexible. A good use of a mixin is for vendor prefixes. Here's an example for border-radius.</p>
+                <pre><code>=border-radius($radius)
+  -webkit-border-radius: $radius
+  -moz-border-radius:    $radius
+  -ms-border-radius:     $radius
+  border-radius:         $radius
+
+.box
+  +border-radius(10px) </code></pre>
+                <p>To create a mixin you use the <code>@mixin</code> directive and give it a name. We've named our mixin <code>border-radius.</code> We're also using the variable <code>$radius</code> inside the parentheses so we can pass in a radius of whatever we want. After you create your mixin, you can then use it as a CSS declaration starting with <code>@include</code> followed by the name of the mixin. When your CSS is generated it'll look like this: </p>
+                <pre><code>.box {
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  border-radius: 10px;
+}</code></pre>
+                <p> Example from our function.scss file</p>
+                <pre><code>//clearfix mixin
+@mixin clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+    }
+}
+</pre>
+                </code>
+            </article>
+            <article>
+                <h3>
+                    <a href="#parent" id="parent"><i class="fa fa-link"></i></a>
+                    Referencing Parent Selectors: &
+                </h3>
+                <p>Sometimes it’s useful to use a nested rule’s parent selector in other ways than the default. For instance, you might want to have special styles for when that selector is hovered over or for when the body element has a certain class. In these cases, you can explicitly specify where the parent selector should be inserted using the & character. For example:</p>
+                <pre><code>a {
+  font-weight: bold;
+  text-decoration: none;
+  &:hover { text-decoration: underline; }
+  body.firefox & { font-weight: normal; }
+}</code></pre>
+                <p> Is compiled to:</p>
+                <pre><code>a {
+  font-weight: bold;
+  text-decoration: none; }
+  a:hover {
+    text-decoration: underline; }
+  body.firefox a {
+    font-weight: normal; }</code></pre>
+                <p> & must appear at the beginning of a compound selector, but it can be followed by a suffix that will be added to the parent selector. For example:</p>
+                <pre><code>#main {
+  color: black;
+  &-sidebar { border: 1px solid; }
+}</code></pre>
+                <p> Is compiled to:</p>
+                <pre><code>#main {
+  color: black; }
+  #main-sidebar {
+    border: 1px solid; }</code></pre>
+                <p>If the parent selector can’t have a suffix applied, Sass will throw an error.</p>
+            </article>
+            <article>
+                <h3>
+                    <a href="#indentation" id="indentation"><i class="fa fa-link"></i></a>
+                    Indentation
+                </h3>
+                <p>Indentation should be consistent throughout the entire file. We would like to use 4-spaces - just be consistent!</p>
+            </article>
+        </section>
+        <section>
+            <article>
+                <h3>
+                    <a href="#section-comments" id="section-comments"><i class="fa fa-link"></i></a>
+                    Comments: /* */ and //
+                </h3>
+                <p>Sass supports standard multiline CSS comments with /* */, as well as single-line comments with //. The multiline comments are preserved in the CSS output where possible, while the single-line comments are removed. For example:</p>
+                <h4 class="recommended">Recommended:</h4>
+                <pre><code class="recommended">
+/* This comment is
+ * several lines long.
+ * since it uses the CSS comment syntax,
+ * it will appear in the CSS output. */
+body { color: black; }
+
+// These comments are only one line long each.
+// They won't appear in the CSS output,
+// since they use the single-line comment syntax.
+a { color: green; }
+</code></pre>
+                <p> Is compiled to:</p>
+                <pre><code>/* This comment is
+ * several lines long.
+ * since it uses the CSS comment syntax,
+ * it will appear in the CSS output. */
+body {
+  color: black; }
+
+a {
+  color: green; }</code></pre>
+                <p>When the first letter of a multiline comment is !, the comment will always rendered into css output even in compressed output modes. This is useful for adding Copyright notices to your generated CSS.</p>
+            </article>
+        </section>
+    </body>
+</html>
